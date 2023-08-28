@@ -15,7 +15,7 @@ export const loginUser = (req, res) => {
 
 export const getUsers = (req, res) => {
   const sql = "SELECT * FROM users";
-  conn.query(sql, (_, result) => {
+  conn.query(sql, (error, result) => {
     if (error)
       return res.status(500).json({ message: "Internal server error" });
     if (result.length === 0) {
