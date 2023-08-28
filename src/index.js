@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import bodyParser from "body-parser";
 import conn from "./config/db.js";
 import router from "./routes/index.js";
 
@@ -9,7 +10,7 @@ dotenv.config();
 conn.once("open", () => {
   console.log("Connected to the database");
 });
-
+app.use(bodyParser.json());
 app.use("/api", router);
 
 const PORT = process.env.PORT;
