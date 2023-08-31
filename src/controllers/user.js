@@ -8,7 +8,7 @@ export const loginUser = (req, res) => {
     if (result.length === 0) {
       return res.status(400).json({ message: "User not found" });
     } else {
-      return res.status(200).json({ message: "Success", Result: result });
+      return res.status(200).json({ message: "Success", result: result });
     }
   });
 };
@@ -21,7 +21,7 @@ export const getUsers = (req, res) => {
     if (result.length === 0) {
       return res.status(400).json({ message: "User not found" });
     } else {
-      return res.status(200).json({ message: "Success", Result: result });
+      return res.status(200).json({ message: "Success", result: result });
     }
   });
 };
