@@ -15,6 +15,7 @@ conn.once("open", () => {
 });
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static("data"))
 app.use("/api", router);
 
 const PORT = process.env.PORT;
