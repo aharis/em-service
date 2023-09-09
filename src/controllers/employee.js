@@ -78,3 +78,46 @@ export const deleteEmployee = (req, res) => {
     return res.status(200).json({ message: "Employee successfully deleted" });
   });
 };
+
+export const getEmployee = (req, res) => {
+  const employeeId = req.params.id;
+  const sql = "SELECT * FROM employees WHERE employeeId = ?";
+  conn.query(sql, [employeeId], (error, result) => {
+    if (error)
+      return res
+        .status(500)
+        .json({ message: "Error in SQL query", details: error });
+    if (result.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "Employee not found", details: error });
+    } else {
+      res.status(200).json({ message: "Success", result: result[0] });
+    }
+  });
+};
+
+export const editEmployee = (req, res) => {
+  const employeeId = req.params.id;
+  const sql =
+    "UPDATE employees SET firstName=?, lastName=?, email=?, address=?, image=? WHERE employeeId=?";
+  const values = [
+    req.body.firstName,
+    req.body.lastName,
+    req.body.email,
+    req.body.address,
+    req.file.originalname,
+    employeeId,
+  ];
+
+  conn.query(sql, values, (error, result) => {
+    if (error) {
+      return res
+        .status(500)
+        .json({ message: "Update employee error in SQL", details: error });
+    }
+    return res
+      .status(201)
+      .json({ message: "Employee successfully updated", result: result });
+  });
+};
