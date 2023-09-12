@@ -13,7 +13,10 @@ dotenv.config();
 conn.once("open", () => {
   console.log("Connected to the database");
 });
-app.use(cors());
+app.use(cors({
+  origin: [process.env.BASE_URL_DEV],
+  credentials: true
+}));
 app.use(bodyParser.json());
 app.use(express.static("data"))
 app.use("/api", router);
