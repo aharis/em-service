@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { loginUser, getUsers } from "../../controllers/user.js";
+import { loginUser, getUsers, deleteUser } from "../../controllers/user.js";
 import {
   addEmployee,
   getEmployees,
@@ -8,12 +8,13 @@ import {
   getEmployee,
 } from "../../controllers/employee.js";
 import uploadImage from "../../middlewares/uploadImage.js";
-import authRoutes from "../../middlewares/authRoutes.js"
+import authRoutes from "../../middlewares/authRoutes.js";
 
 const router = Router();
 
 router.post("/login", loginUser, authRoutes);
 router.get("/users", getUsers);
+router.delete("/users/:id", deleteUser);
 router.post("/employee/create", uploadImage, addEmployee);
 router.get("/employee", getEmployees);
 router.delete("/employee/:id", deleteEmployee);
