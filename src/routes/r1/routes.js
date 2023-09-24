@@ -5,6 +5,7 @@ import {
   deleteUser,
   getUser,
   adminCount,
+  getAllSalary,
 } from "../../controllers/user.js";
 import {
   addEmployee,
@@ -12,6 +13,7 @@ import {
   deleteEmployee,
   editEmployee,
   getEmployee,
+  employeeCount,
 } from "../../controllers/employee.js";
 import uploadImage from "../../middlewares/uploadImage.js";
 import authRoutes from "../../middlewares/authRoutes.js";
@@ -28,5 +30,7 @@ router.delete("/employee/:id", deleteEmployee);
 router.get("/employee/:id", getEmployee);
 router.post("/employee/:id", uploadImage, editEmployee);
 router.get("/adminCount", adminCount, authRoutes);
+router.get("/employeeCount", employeeCount);
+router.get("/allSalary", getAllSalary);
 
 export default router;
