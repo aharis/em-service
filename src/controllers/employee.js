@@ -121,3 +121,16 @@ export const editEmployee = (req, res) => {
       .json({ message: "Employee successfully updated", result: result });
   });
 };
+
+export const employeeCount = (req, res) => {
+  const sql = "SELECT COUNT(employeeId) AS employee FROM employees";
+  conn.query(sql, (error, result) => {
+    if (error) {
+      return res.status(500).json({ message: "Internal server error" });
+    } else if (result.length === 0) {
+      return res.status(400).json({ message: "Employees not found" });
+    } else {
+      return res.status(200).json({ message: "Success", result: result });
+    }
+  });
+};

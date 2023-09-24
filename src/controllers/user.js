@@ -66,14 +66,34 @@ export const deleteUser = (req, res) => {
 };
 
 export const adminCount = (req, res) => {
-  const sql = "SELECT count(userId) as admin FROM users";
+  const sql =
+    "SELECT SUM(roles = 'superadmin') AS superadminCount, SUM(roles = 'admin') AS adminCount FROM users";
+
   conn.query(sql, (error, result) => {
     if (error) {
       return res.status(500).json({ message: "Internal server error" });
-    } else if (result.length === 0) {
-      return res.status(400).json({ message: "User not found" });
+    } else if (result.length === 0 || result[0].superadminCount === 0) {
+      return res.status(400).json({ message: "Superadmins not found" });
     } else {
-      return res.status(200).json({ message: "Success", result: result });
+      return res.status(200).json({
+        message: "Success",
+        superadmin: result[0].superadminCount,
+        admin: result[0].adminCount,
+      });
+    }
+  });
+};
+
+export const getAllSalary = (req, res) => {
+  const sql =
+    "SELECT SUM(salary) AS total_salary FROM (SELECT salary FROM users UNION ALL SELECT salary FROM employees) combined_salaries;";
+  conn.query(sql, (error, result) => {
+    if (error) {
+      return res.status(500).json({ message: error.message });
+    } else if (result.length === 0) {
+      return res.status(200).json({ message: "No data salary", result: 0 });
+    } else {
+      return res.json({ message: "Success", result: result[0].total_salary });
     }
   });
 };
