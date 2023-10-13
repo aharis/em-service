@@ -15,7 +15,7 @@ conn.once("open", () => {
 });
 app.use(cors({
   origin: [process.env.BASE_URL_DEV],
-  methods: ["POST", "GET", "PUT"],
+  methods: ["POST", "GET", "PUT", "DELETE"],
   credentials: true
 }));
 app.use(bodyParser.json());
